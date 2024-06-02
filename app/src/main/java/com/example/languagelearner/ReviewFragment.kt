@@ -1,10 +1,15 @@
 package com.example.languagelearner
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import com.example.languagelearner.activities.FlashCardsActivity
+import com.example.languagelearner.activities.KnowledgeCardsActivity
+import com.example.languagelearner.activities.QuickQuizActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +39,27 @@ class ReviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_review, container, false)
+        val view =  inflater.inflate(R.layout.fragment_review, container, false)
+        val buttonQuickQuiz = view.findViewById<Button>(R.id.button_quick_quiz)
+        val buttonFlashcards = view.findViewById<Button>(R.id.button_flashcards)
+        val buttonKnowledgeCards = view.findViewById<Button>(R.id.button_knowledge_cards)
+
+        buttonFlashcards.setOnClickListener{
+            val intent = Intent(activity, FlashCardsActivity::class.java)
+            startActivity(intent)
+        }
+
+        buttonQuickQuiz.setOnClickListener {
+            val intent = Intent(activity, QuickQuizActivity::class.java)
+            startActivity(intent)
+        }
+
+        buttonKnowledgeCards.setOnClickListener {
+            val intent = Intent(activity, KnowledgeCardsActivity::class.java)
+            startActivity(intent)
+        }
+
+        return view
     }
 
     companion object {

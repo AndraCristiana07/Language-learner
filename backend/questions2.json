@@ -1,0 +1,532 @@
+{
+    "languageLearner": 
+    [
+        {
+            "categoryName": "Animals",
+            "questions":
+            [
+                {
+                    "questionNumber": 1,
+                    "questionLabel": "How do you say 'Dog'?",
+                    "answers": 
+                    [
+                        {
+                            "answerLabel": "Pisică",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Cal",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Vacă",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Câine",
+                            "isCorrect": true
+                        }
+                    ]
+                },
+                {
+                    "questionNumber": 2,
+                    "questionLabel": "How do you say 'Cat'?",
+                    "answers": 
+                    [
+                        {
+                            "answerLabel": "Pisică",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Șoarece",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Cal",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Câine",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "questionNumber": 3,
+                    "questionLabel": "How do you say 'Cow'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Capră",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Cal",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Oaie",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Vacă",
+                            "isCorrect": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "categoryName": "Colors",
+            "questions":
+            [
+                {
+                    "questionNumber": 1,
+                    "questionLabel": "How do you say 'Red'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Galben",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Roșu",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Verde",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Albastru",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "questionNumber": 2,
+                    "questionLabel": "How do you say 'Blue'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Roșu",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Negru",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Albastru",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Galben",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "questionNumber": 3,
+                    "questionLabel": "How do you say 'Green'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Galben",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Alb",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Negru",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Verde",
+                            "isCorrect": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "categoryName": "Fruits",
+            "questions":
+            [
+                {
+                    "questionNumber": 1,
+                    "questionLabel": "How do you say 'Apple'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Pere",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Măr",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Portocală",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Cireșe",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "questionNumber": 2,
+                    "questionLabel": "How do you say 'Banana'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Banană",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Pepene",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Struguri",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Măr",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "questionNumber": 3,
+                    "questionLabel": "How do you say 'Orange'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Cireșe",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Pepene",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Portocală",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Măr",
+                            "isCorrect": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "categoryName": "Vegetables",
+            "questions":
+            [
+                {
+                    "questionNumber": 1,
+                    "questionLabel": "How do you say 'Carrot'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Cartof",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Ceapă",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Salată",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Morcov",
+                            "isCorrect": true
+                        }
+                    ]
+                },
+                {
+                    "questionNumber": 2,
+                    "questionLabel": "How do you say 'Potato'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Ceapă",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Salată",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Cartof",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Morcov",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "questionNumber": 3,
+                    "questionLabel": "How do you say 'Onion'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Ceapă",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Cartof",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Salată",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Morcov",
+                            "isCorrect": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "categoryName": "Sports",
+            "questions":
+            [
+                {
+                    "questionNumber": 1,
+                    "questionLabel": "How do you say 'Football'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Baschet",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Fotbal",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Tenis",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Volei",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "questionNumber": 2,
+                    "questionLabel": "How do you say 'Basketball'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Fotbal",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Baschet",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Tenis",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Volei",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "questionNumber": 3,
+                    "questionLabel": "How do you say 'Tennis'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Volei",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Tenis",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Fotbal",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Baschet",
+                            "isCorrect": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "categoryName": "Work",
+            "questions":
+            [
+                {
+                    "questionNumber": 1,
+                    "questionLabel": "How do you say 'Teacher'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Doctor",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Profesor",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Inginer",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Avocat",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "questionNumber": 2,
+                    "questionLabel": "How do you say 'Doctor'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Avocat",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Inginer",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Profesor",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Doctor",
+                            "isCorrect": true
+                        }
+                    ]
+                },
+                {
+                    "questionNumber": 3,
+                    "questionLabel": "How do you say 'Engineer'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Doctor",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Inginer",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Profesor",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Avocat",
+                            "isCorrect": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "categoryName": "Numbers",
+            "questions":
+            [
+                {
+                    "questionNumber": 1,
+                    "questionLabel": "How do you say 'One'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Unu",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Doi",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Trei",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Patru",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "questionNumber": 2,
+                    "questionLabel": "How do you say 'Two'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Unu",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Doi",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Trei",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Patru",
+                            "isCorrect": false
+                        }
+                    ]
+                },
+                {
+                    "questionNumber": 3,
+                    "questionLabel": "How do you say 'Three'?",
+                    "answers":
+                    [
+                        {
+                            "answerLabel": "Unu",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Doi",
+                            "isCorrect": false
+                        },
+                        {
+                            "answerLabel": "Trei",
+                            "isCorrect": true
+                        },
+                        {
+                            "answerLabel": "Patru",
+                            "isCorrect": false
+                        }
+                    ]
+                }
+
+            ]
+        }
+    ]
+}
+

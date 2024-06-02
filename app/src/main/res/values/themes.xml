@@ -6,4 +6,16 @@
     </style>
 
     <style name="Theme.LanguageLearner" parent="Base.Theme.LanguageLearner" />
+    <style name="SplashApi" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">
+            @color/white
+        </item>
+        <item name="windowSplashScreenAnimatedIcon">
+            @drawable/ag
+        </item>
+        <item name="windowSplashScreenAnimationDuration">
+            3000
+        </item>
+        <item name="postSplashScreenTheme">@style/Theme.LanguageLearner</item>
+    </style>
 </resources>
