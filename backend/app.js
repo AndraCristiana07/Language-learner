@@ -1,5 +1,5 @@
 const questions = require('./questions.json')
-const sentences = require('./sentences.json')
+const sentencesJs = require('./sentences.json')
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors')
 const bcrypt = require('bcrypt')
@@ -139,7 +139,7 @@ couch.db.create(dbname, (err, body) => {
     if (err) {
         console.error(err, body)
     } else {
-        console.log("Database created")
+        console.log("Questions Database created")
     }
 
     questions.languageLearner.forEach(languageLearner => {
@@ -173,19 +173,19 @@ couch.db.create(dbname, (err, body) => {
     })
 })
 
-
-const sentences_db = couch.use('sentences_db')
-couch.db.create('sentences_db', (err, body) => {
+const sentenceDB = 'sentences_db'
+const sentences_db = couch.use(sentenceDB)
+couch.db.create(sentenceDB, (err, body) => {
     if (err) {
         console.error(err, body)
     } else {
-        console.log("Database created")
+        console.log("Sentences Database created")
     }
 
-    sentences.sentences.forEach(sentence => {
+    sentencesJs.sentences.forEach(sentence => {
         sentences_db.find({
             "selector": {
-                "sentenceQuestion": sentence.sentenceQuestion
+                "sentenceNumber": sentence.sentenceNumber
             }
         }, (err, resp) => {
             if (resp.docs.length > 0) {
@@ -227,6 +227,7 @@ app.get('/sentences', (req, res) => {
 
 app.get('/categories', async (req, res) => {
     await questions_db.find({ selector: { "categoryName": { "$exists": true } }, fields: ["categoryName"] }, (err, resp) => {
+        console.log(resp.docs.map(doc => doc.categoryName))
         res.json(resp.docs.map(doc => doc.categoryName))
     })
 })

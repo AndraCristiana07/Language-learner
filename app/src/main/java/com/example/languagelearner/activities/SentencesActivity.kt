@@ -2,23 +2,28 @@ package com.example.languagelearner.activities
 
 import android.content.ClipData
 import android.content.ClipDescription
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.DragEvent
 import android.view.View
 import android.view.View.DragShadowBuilder
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.GridLayout
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.isEmpty
@@ -35,13 +40,14 @@ class SentencesActivity : AppCompatActivity() {
 
     private lateinit var infoView: TextView
     private lateinit var sentenceQuestion: TextView
-//    private lateinit var sentenceAnswer: EditText
     private lateinit var shuffleWordsGridLayout: GridLayout
     private lateinit var sentenceAnswerContainer: LinearLayout
     private lateinit var nextButton: Button
     private lateinit var quitButton: Button
     private var currentSentenceIndex = 0
     private lateinit var sentences: List<Sentence>
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,19 +66,20 @@ class SentencesActivity : AppCompatActivity() {
         nextButton = findViewById(R.id.button_next_sentence)
         quitButton = findViewById(R.id.button_quit_sentence)
         sentenceAnswerContainer = findViewById(R.id.sentence_answer_container)
+        sharedPreferences = getSharedPreferences("sentenceProgress", Context.MODE_PRIVATE)
+        currentSentenceIndex = sharedPreferences.getInt("sentence-index", 0)
 
         fetchSentences()
 
         nextButton.setOnClickListener {
 
-            if(currentSentenceIndex < sentences.size - 1){
-                if(sentenceAnswerContainer.childCount == 0){
-                    Toast.makeText(this, "Input something first", Toast.LENGTH_SHORT).show()
-                } else {
+//            if(currentSentenceIndex < sentences.size - 1){
+                if(sentenceAnswerContainer.childCount != 0){
+
                     val sentence = sentences[currentSentenceIndex].sentenceTranslated
                     Log.d("Translated correct", sentence)
                     val userAnswer = StringBuilder()
-                    for (i in 0..<sentenceAnswerContainer.childCount){
+                    for (i in 0..<sentenceAnswerContainer.childCount) {
                         val wordView = sentenceAnswerContainer.getChildAt(i) as TextView
                         userAnswer.append(wordView.text).append(" ")
 
@@ -80,25 +87,42 @@ class SentencesActivity : AppCompatActivity() {
                     val trimmedSentence = userAnswer.toString().trim()
 
                     Log.d("user answer", userAnswer.toString())
-                    if(trimmedSentence == sentence){
+                    if (trimmedSentence == sentence) {
                         Toast.makeText(this, "Correct answer", Toast.LENGTH_SHORT).show()
-                        currentSentenceIndex++
-                        displaySentence(sentences[currentSentenceIndex])
+                        Log.d("Question idx", currentSentenceIndex.toString())
+                        Log.d("Question size", sentences.size.toString())
+                        if (currentSentenceIndex < sentences.size - 1) {
+                            currentSentenceIndex++
+                            saveProgress()
+                            displaySentence(sentences[currentSentenceIndex])
 
-                        sentenceAnswerContainer.removeAllViews()
+                            sentenceAnswerContainer.removeAllViews()
+                        } else {
+                            Log.d("Last", "last one")
+                            clearProgress()
+                            val alertDialogBuilder = AlertDialog.Builder(this)
+                            alertDialogBuilder.setMessage("Lesson finished!")
+                            alertDialogBuilder.setPositiveButton("Go back") { _, _ ->
+                                val intent = Intent(this, LessonsPage::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            val alertDialogBox = alertDialogBuilder.create()
+                            alertDialogBox.show()
+
+                        }
                     } else {
-                        Toast.makeText(this, "Wrong answer, try again",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Wrong answer, try again", Toast.LENGTH_SHORT).show()
                         sentenceAnswerContainer.removeAllViews()
                     }
+                } else {
+                    Toast.makeText(this, "Input something first", Toast.LENGTH_SHORT).show()
                 }
 
-
-            } else {
-                Toast.makeText(this, "Lesson finished!", Toast.LENGTH_SHORT).show()
-            }
         }
 
         quitButton.setOnClickListener {
+            saveProgress()
             val alertDialogBuilder = AlertDialog.Builder(this)
             alertDialogBuilder.setMessage("Do you want to quit the lesson?")
             alertDialogBuilder.setPositiveButton("Yes"){_,_ ->
@@ -127,6 +151,9 @@ class SentencesActivity : AppCompatActivity() {
                     }
 
                 }
+                DragEvent.ACTION_DRAG_LOCATION -> {
+                    true
+                }
                 DragEvent.ACTION_DRAG_ENTERED -> {
                     (v as? LinearLayout)?.setBackgroundColor(Color.GREEN)
                     v.invalidate()
@@ -147,6 +174,9 @@ class SentencesActivity : AppCompatActivity() {
                         setBackgroundColor(Color.LTGRAY)
                         tag = dragData
                     }
+//                    val layoutParams = droppedTextView.layoutParams as RelativeLayout.LayoutParams
+//                    layoutParams.setMargins(50,50,50,50)
+//                    droppedTextView.layoutParams = layoutParams
                     (v as LinearLayout).addView(droppedTextView)
                     (v as? LinearLayout)?.setBackgroundColor(Color.TRANSPARENT)
                     v.invalidate()
@@ -157,10 +187,10 @@ class SentencesActivity : AppCompatActivity() {
                     v.invalidate()
                     when(event.result) {
                         true ->
-                            Toast.makeText(this, "The drop was handled.", Toast.LENGTH_LONG)
+                            Log.d("Drop handle", "The drop was handled.")
                         else ->
-                            Toast.makeText(this, "The drop didn't work.", Toast.LENGTH_LONG)
-                    }.show()
+                            Log.d("Drop handle", "The drop was not handled.")
+                    }
                     true
                 }
 
@@ -182,6 +212,8 @@ class SentencesActivity : AppCompatActivity() {
                     if(response.isSuccessful){
                         sentences = response.body()!!
                         if(sentences.isNotEmpty()){
+//                            Log.d("Senteneces: ", sentences.size.toString())
+                            sharedPreferences.edit().putInt("sentence-totalSentences", sentences.size).apply()
                             displaySentence(sentences[currentSentenceIndex])
                         } else {
                             Toast.makeText(this@SentencesActivity, "Failed to fetch sentences", Toast.LENGTH_SHORT).show()
@@ -204,7 +236,9 @@ class SentencesActivity : AppCompatActivity() {
             val textView = TextView(this).apply {
                 text = word
                 tag= word
-                setPadding(8,8,8,8)
+                setBackgroundColor(Color.DKGRAY)
+                setTextColor(Color.WHITE)
+                setPadding(16,16,16, 16)
                 setOnLongClickListener { v ->
                     val item = ClipData.Item(v.tag as? CharSequence)
                     val dragData = ClipData(v.tag as? CharSequence, arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN), item)
@@ -213,11 +247,51 @@ class SentencesActivity : AppCompatActivity() {
                     true
                 }
             }
+//            val layoutParams = textView.layoutParams as RelativeLayout.LayoutParams
+//            layoutParams.setMargins(50,50,50,50)
+//            textView.layoutParams = layoutParams
+
+
             shuffleWordsGridLayout.addView(textView)
         }
 
+    }
 
+    private fun saveProgress(){
+        with(sharedPreferences.edit()){
+            putInt("sentence-index", currentSentenceIndex)
+            apply()
+        }
+    }
+
+    private fun clearProgress(){
+        with(sharedPreferences.edit()){
+            remove("sentence-index")
+            remove("sentence-totalSentences")
+            apply()
+        }
     }
 
 
+//    private fun checkSentence(){
+//        val sentence = sentences[currentSentenceIndex].sentenceTranslated
+////        val correctOrder = sentence.sentenceTranslated.split(" ").toList()
+//        Log.d("Translated correct", sentence)
+//        val userAnswer = StringBuilder()
+//        for (i in 0..<sentenceAnswerContainer.childCount){
+//            val wordView = sentenceAnswerContainer.getChildAt(i) as TextView
+//            userAnswer.append(wordView.text).append(" ")
+//
+//        }
+//        val trimmedSentence = userAnswer.toString().trim()
+//
+////        val userAnswer = sentenceAnswerContainer.children.map { (it as TextView).text.toString() }
+//        Log.d("user answer", userAnswer.toString())
+//        if(trimmedSentence == sentence){
+//            Toast.makeText(this, "Correct answer", Toast.LENGTH_SHORT).show()
+//        } else {
+//            Toast.makeText(this, "Wrong answer, try again",Toast.LENGTH_SHORT).show()
+//        }
+//
+//    }
 }

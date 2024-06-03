@@ -14,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import com.example.languagelearner.activities.QuizActivity
 import com.example.languagelearner.activities.SentencesActivity
+import com.example.languagelearner.activities.SpeechToTextActivity
 import com.example.languagelearner.auth.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,8 +36,13 @@ class HomeFragment : Fragment() {
     private var param2: String? = null
     private lateinit var categoriesLayout: LinearLayout
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedPreferences2: SharedPreferences
+
+    private lateinit var sharedPreferences3: SharedPreferences
     private lateinit var sentenceButton: Button
     private lateinit var sentenceProgressBar: ProgressBar
+    private lateinit var speechButton: Button
+    private lateinit var speechProgressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +51,8 @@ class HomeFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
         sharedPreferences = requireContext().getSharedPreferences("quizProgress", Context.MODE_PRIVATE)
+        sharedPreferences2 = requireContext().getSharedPreferences("speechProgress", Context.MODE_PRIVATE)
+        sharedPreferences3 = requireContext().getSharedPreferences("sentenceProgress", Context.MODE_PRIVATE)
 
     }
 
@@ -58,25 +66,28 @@ class HomeFragment : Fragment() {
         categoriesLayout = view.findViewById(R.id.categories_layout)
         sentenceButton = view.findViewById(R.id.sentence_button)
         sentenceProgressBar = view.findViewById(R.id.sentence_progressBar)
+        speechButton = view.findViewById(R.id.speech_button)
+        speechProgressBar = view.findViewById(R.id.speech_progressBar)
 
         sentenceButton.setOnClickListener {
             val intent = Intent(activity, SentencesActivity::class.java)
             startActivity(intent)
         }
+        speechButton.setOnClickListener {
+            val intent = Intent(activity, SpeechToTextActivity::class.java)
+            startActivity(intent)
+        }
+
+        val progressSentence = sharedPreferences3.getInt("sentence-index", 0)
+        val totalSentences = sharedPreferences3.getInt("sentence-totalSentences", 1)
+        sentenceProgressBar.progress = (progressSentence.toFloat() / totalSentences * 100).toInt()
+
+        val progressSpeech = sharedPreferences2.getInt("speech-index", 0)
+        val totalSpeech = sharedPreferences2.getInt("speech-totalSpeech", 1)
+        speechProgressBar.progress = (progressSpeech.toFloat() / totalSpeech * 100).toInt()
+
 
         fetchCategories()
-//        val button_animal = view.findViewById<Button>(R.id.button_animals)
-//        val button_food = view.findViewById<Button>(R.id.button_fruits)
-//        val button_work = view.findViewById<Button>(R.id.button_work)
-//        val button_numbers = view.findViewById<Button>(R.id.button_numbers)
-//        val button_colors = view.findViewById<Button>(R.id.button_colors)
-//        val button_seasons = view.findViewById<Button>(R.id.button_vegetables)
-//        val button_sports = view.findViewById<Button>(R.id.button_sports)
-//
-//        button_animal.setOnClickListener{
-//            val intent = Intent(activity, QuizActivity::class.java)
-//            startActivity(intent)
-//        }
 
         return view
     }

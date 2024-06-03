@@ -16,7 +16,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.languagelearner.R
 import com.example.languagelearner.auth.RetrofitInstance
-import com.example.languagelearner.databinding.ActivityAnimalQuizBinding
+import com.example.languagelearner.databinding.ActivityQuizBinding
 import com.example.languagelearner.questions.Answer
 import com.example.languagelearner.questions.Question
 import retrofit2.Call
@@ -25,25 +25,20 @@ import retrofit2.Response
 
 class QuizActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAnimalQuizBinding
+    private lateinit var binding: ActivityQuizBinding
     private lateinit var questions: List<Question>
     private var currentQuestionIndex = 0
     private lateinit var questionTextView: TextView
-//    private lateinit var radioButton1 : RadioButton
-//    private lateinit var radioButton2: RadioButton
-//    private lateinit var radioButton3: RadioButton
-//    private lateinit var radioButton4: RadioButton
     private lateinit var radioGroup: RadioGroup
     private lateinit var sharedPreferences: SharedPreferences
 
-    //    private var score = 0
 //    private var categoryName = "Animals"
 private var categoryName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_animal_quiz)
+        setContentView(R.layout.activity_quiz)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -51,16 +46,12 @@ private var categoryName = ""
             insets
         }
 
-        binding = ActivityAnimalQuizBinding.inflate(layoutInflater)
+        binding = ActivityQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
 //        categoryName = "Animals"
         categoryName = intent.getStringExtra("categoryName").toString()
         Log.d("categ", categoryName)
         questionTextView = findViewById(R.id.question)
-//        radioButton1 = findViewById(R.id.radioButton)
-//        radioButton2 = findViewById(R.id.radioButton2)
-//        radioButton3 = findViewById(R.id.radioButton3)
-//        radioButton4 = findViewById(R.id.radioButton4)
         radioGroup = findViewById(R.id.radioGroup)
         sharedPreferences = getSharedPreferences("quizProgress", Context.MODE_PRIVATE)
         currentQuestionIndex = sharedPreferences.getInt("$categoryName-index",0)
@@ -158,6 +149,7 @@ private var categoryName = ""
 
     }
 
+
     private fun displayQuestion(question: Question) {
         questionTextView.text = question.questionLabel
         Log.d("AA", question.questionLabel)
@@ -170,22 +162,6 @@ private var categoryName = ""
             }
             radioGroup.addView(radioButton)
 
-//            radioButton1 = RadioButton(this)
-//            radioButton1.text = answer.answerLabel
-//            radioGroup.addView(radioButton1)
-//
-//            radioButton2 = RadioButton(this)
-//            radioButton2.text = answer.answerLabel
-//            radioGroup.addView(radioButton2)
-//
-//
-//            radioButton3 = RadioButton(this)
-//            radioButton3.text = answer.answerLabel
-//            radioGroup.addView(radioButton3)
-//
-//            radioButton4 = RadioButton(this)
-//            radioButton4.text = answer.answerLabel
-//            radioGroup.addView(radioButton4)
         }
 
 

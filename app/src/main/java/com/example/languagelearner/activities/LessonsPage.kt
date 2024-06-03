@@ -21,12 +21,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 class LessonsPage : AppCompatActivity() {
-    // TODO : DRAG AND DROP FOR SENTENCE
     // TODO : TEXT TO SPEECH
     // TODO : RESOLVE SENTENCE BUTTON
-    // TODO : KNOWLEDGE CARD BACK BUTTON
     // TODO : USER NAME IN LESSON PAGE - to work for dif users
-    // TODO : GET INFO FOR PROFILE PAGE
+    // TODO : IMG IN BACKEND
 
     private lateinit var binding: ActivityLessonsPageBinding
     private lateinit var progressBar: ProgressBar
