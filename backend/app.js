@@ -86,13 +86,25 @@ app.post('/login', (req, res) => {
             if (row) {
                 const isPasswordCorrect = bcrypt.compareSync(password, row.password);
                 if (isPasswordCorrect) {
-                    res.json({ message: 'Login successful' })
+                    res.json({ message: 'Login successful', user: {name: row.name, email: row.email, phone: row.phone} })
                 } else {
                     res.status(401).json({ message: 'Invalid password' })
                 }
             } else {
                 res.status(401).json({ message: 'User not found' })
             }
+        }
+    })
+})
+
+app.put('/profile', (req, res) => {
+    const { email, name, phone } = req.body;
+
+    db.run('UPDATE users SET name = ?, phone = ? WHERE email = ?', [name, phone, email], (err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.json({ message: 'Profile updated' })
         }
     })
 })
@@ -239,10 +251,8 @@ app.get('/categories/:categoryName/questions', async (req, res) => {
         // console.log("bbb",resp.docs)
         // console.log("ccc",resp.docs[0].questions)
         // console.log("ddd", resp.docs[0].questions[0].answers)
-
-
         res.json(resp.docs[0].questions)
-        
+        console.log(JSON.stringify(resp.docs[0].questions[0].answers[0].image))
     })
 })
 

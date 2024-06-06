@@ -44,10 +44,10 @@ class LessonsPage : AppCompatActivity() {
 
 //        setContentView(R.layout.activity_lessons_page)
 //        sharedPreferences = getSharedPreferences("userName", Context.MODE_PRIVATE)
-        val userName = sharedPreferences.getString("userName", "")
-//        val userName = intent.getStringExtra("USER_NAME") ?: "User"
-//        Log.d("LessonsPageActivity", "Received userName: $userName")
-//        binding.username.text = "Hi, $userName!"
+//        val userName = sharedPreferences.getString("userName", "")
+        val userName = intent.getStringExtra("USER_NAME") ?: "User"
+        Log.d("LessonsPageActivity", "Received userName: $userName")
+        binding.username.text = "Hi, $userName!"
         binding.username.text = "Hi, $userName"
         loadFragment(HomeFragment())
         bottomNav = findViewById(R.id.bottomNavigationView) as BottomNavigationView

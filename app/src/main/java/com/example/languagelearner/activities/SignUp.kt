@@ -21,7 +21,7 @@ import retrofit2.Response
 class SignUp : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
-    private lateinit var sharedPreferences: SharedPreferences
+//    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +37,7 @@ class SignUp : AppCompatActivity() {
 //        sharedPreferences = this.getSharedPreferences(R.id.editTextName.toString(), Context.MODE_PRIVATE)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        sharedPreferences = getSharedPreferences("nameForUser", Context.MODE_PRIVATE)
+//        sharedPreferences = getSharedPreferences("nameForUser", Context.MODE_PRIVATE)
 
         binding.button7.setOnClickListener {
             val intent = Intent(this, Login::class.java)
@@ -95,12 +95,7 @@ class SignUp : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val defaultResponse = response.body()
                         if (defaultResponse != null && !defaultResponse.error) {
-                            with(sharedPreferences.edit()){
-                                putString("userName", name)
-                                putString("userEmail", email)
-                                putString("userPhone", phone)
-                                apply()
-                            }
+
                             Toast.makeText(this@SignUp, "Registration successful", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@SignUp, Login::class.java)
                             startActivity(intent)

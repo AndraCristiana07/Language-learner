@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import com.example.languagelearner.activities.GrammarActivity
 import com.example.languagelearner.activities.QuizActivity
 import com.example.languagelearner.activities.SentencesActivity
 import com.example.languagelearner.activities.SpeechToTextActivity
@@ -37,12 +38,14 @@ class HomeFragment : Fragment() {
     private lateinit var categoriesLayout: LinearLayout
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var sharedPreferences2: SharedPreferences
-
     private lateinit var sharedPreferences3: SharedPreferences
+    private lateinit var sharedPreferences4: SharedPreferences
     private lateinit var sentenceButton: Button
     private lateinit var sentenceProgressBar: ProgressBar
     private lateinit var speechButton: Button
     private lateinit var speechProgressBar: ProgressBar
+    private lateinit var grammarButton: Button
+    private lateinit var grammarProgressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +56,7 @@ class HomeFragment : Fragment() {
         sharedPreferences = requireContext().getSharedPreferences("quizProgress", Context.MODE_PRIVATE)
         sharedPreferences2 = requireContext().getSharedPreferences("speechProgress", Context.MODE_PRIVATE)
         sharedPreferences3 = requireContext().getSharedPreferences("sentenceProgress", Context.MODE_PRIVATE)
+        sharedPreferences4 = requireContext().getSharedPreferences("grammarProgress", Context.MODE_PRIVATE)
 
     }
 
@@ -65,9 +69,11 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         categoriesLayout = view.findViewById(R.id.categories_layout)
         sentenceButton = view.findViewById(R.id.sentence_button)
+        grammarButton  = view.findViewById(R.id.grammar_button)
         sentenceProgressBar = view.findViewById(R.id.sentence_progressBar)
         speechButton = view.findViewById(R.id.speech_button)
         speechProgressBar = view.findViewById(R.id.speech_progressBar)
+        grammarProgressBar = view.findViewById(R.id.grammar_progressBar)
 
         sentenceButton.setOnClickListener {
             val intent = Intent(activity, SentencesActivity::class.java)
@@ -75,6 +81,10 @@ class HomeFragment : Fragment() {
         }
         speechButton.setOnClickListener {
             val intent = Intent(activity, SpeechToTextActivity::class.java)
+            startActivity(intent)
+        }
+        grammarButton.setOnClickListener {
+            val intent = Intent(activity, GrammarActivity::class.java)
             startActivity(intent)
         }
 
@@ -86,6 +96,9 @@ class HomeFragment : Fragment() {
         val totalSpeech = sharedPreferences2.getInt("speech-totalSpeech", 1)
         speechProgressBar.progress = (progressSpeech.toFloat() / totalSpeech * 100).toInt()
 
+        val progressGrammar = sharedPreferences4.getInt("grammar-index",0)
+        val totalGrammar = sharedPreferences4.getInt("grammar-totalGrammar",1)
+        grammarProgressBar.progress = (progressGrammar.toFloat() / totalGrammar * 100).toInt()
 
         fetchCategories()
 

@@ -3,8 +3,13 @@ package com.example.languagelearner.activities
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
+import android.util.Base64.decode
 import android.util.Log
+import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -29,11 +34,17 @@ class QuizActivity : AppCompatActivity() {
     private lateinit var questions: List<Question>
     private var currentQuestionIndex = 0
     private lateinit var questionTextView: TextView
-    private lateinit var radioGroup: RadioGroup
+    private lateinit var radioGroup1: RadioGroup
+    private lateinit var radioGroup2: RadioGroup
+    private lateinit var imageViews: List<ImageView>
+    private lateinit var radioButtons: List<RadioButton>
+
+//    private lateinit var tableLayout: TableLayout
+
     private lateinit var sharedPreferences: SharedPreferences
 
-//    private var categoryName = "Animals"
-private var categoryName = ""
+    //    private var categoryName = "Animals"
+    private var categoryName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,16 +63,57 @@ private var categoryName = ""
         categoryName = intent.getStringExtra("categoryName").toString()
         Log.d("categ", categoryName)
         questionTextView = findViewById(R.id.question)
-        radioGroup = findViewById(R.id.radioGroup)
+//        tableLayout = findViewById(R.id.table_layout)
+        radioGroup1 = findViewById(R.id.radioGroup1)
+        radioGroup2 = findViewById(R.id.radioGroup2)
         sharedPreferences = getSharedPreferences("quizProgress", Context.MODE_PRIVATE)
         currentQuestionIndex = sharedPreferences.getInt("$categoryName-index",0)
+
+
+
+        imageViews = listOf(
+            findViewById(R.id.image_view1),
+            findViewById(R.id.image_view2),
+            findViewById(R.id.image_view3),
+            findViewById(R.id.image_view4)
+        )
+
+        radioButtons = listOf(
+            findViewById(R.id.radio_button1),
+            findViewById(R.id.radio_button2),
+            findViewById(R.id.radio_button3),
+            findViewById(R.id.radio_button4)
+        )
+
+        radioListener()
+//        radioButtons.forEachIndexed { index, radioButton ->
+//            radioButton.setOnCheckedChangeListener { buttonView, isChecked ->
+//                if(isChecked) {
+//                    radioButtons.forEachIndexed { index2, radioButton2 ->
+//                        if(index2 != index) {
+//                            radioButton2.isChecked = false
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        }
+
         fetchQuestions(categoryName)
 
         binding.buttonNext.setOnClickListener {
-            val selectedRadioButtonId = binding.radioGroup.checkedRadioButtonId
-            if (selectedRadioButtonId != -1) {
-                val selectedRadioButton = findViewById<RadioButton>(selectedRadioButtonId)
-                val selectedAnswer = selectedRadioButton.tag as Answer
+            val selectedRadioButtonId1 = binding.radioGroup1.checkedRadioButtonId
+            val selectedRadioButtonId2 = binding.radioGroup2.checkedRadioButtonId
+
+            if (selectedRadioButtonId1 != -1 || selectedRadioButtonId2 != -1) {
+                val selectedRadioButton: RadioButton? =
+                    if (selectedRadioButtonId1 != -1) {
+                        findViewById(selectedRadioButtonId1)
+                    } else {
+                        findViewById(selectedRadioButtonId2)
+                    }
+                val selectedAnswer = selectedRadioButton?.tag as Answer
+
                 if (selectedAnswer.isCorrect) {
                     Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
 
@@ -127,8 +179,10 @@ private var categoryName = ""
                         if (questions.isNotEmpty()) {
                             sharedPreferences.edit().putInt("$categoryName-totalQuestions", questions.size).apply()
                             displayQuestion(questions[currentQuestionIndex])
+
                         }
                     } else {
+                        Log.e("Fetch", "Failed to fetch questions")
                         Toast.makeText(
                             this@QuizActivity,
                             "Failed to fetch questions",
@@ -149,23 +203,76 @@ private var categoryName = ""
 
     }
 
-
-    private fun displayQuestion(question: Question) {
-        questionTextView.text = question.questionLabel
-        Log.d("AA", question.questionLabel)
-
-        radioGroup.removeAllViews()
-        question.answers.forEach { answer ->
-            val radioButton = RadioButton(this).apply {
-                text = answer.answerLabel
-                tag = answer
-            }
-            radioGroup.addView(radioButton)
-
+    private fun stringToBitmap(encodedString: String): Bitmap? {
+        return try {
+            val imageBytes = decode(encodedString, Base64.DEFAULT)
+            BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+        } catch (e: IllegalArgumentException) {
+            Log.e("decode error", "Invalid base64 str")
+            null
         }
-
-
     }
+
+    private fun displayQuestion(question: Question){
+        questionTextView.text = question.questionLabel
+
+        for ((i, answer) in question.answers.withIndex()) {
+            val decodeImage = stringToBitmap(answer.image)
+            if (decodeImage != null) {
+                imageViews[i].setImageBitmap(decodeImage)
+            } else {
+                Log.e("ImageDecodeError", "Failed to decode image for ${answer.answerLabel}")
+            }
+            radioButtons[i].text = answer.answerLabel;
+            radioButtons[i].tag = answer;
+//            radioGroup.addView(radioButtons[i])
+
+
+//            radioGroup.setOnCheckedChangeListener { group, checkedId ->
+//                if(checkedId != -1){
+//                    for (i in 0 until group.childCount){
+//                        val button = group.getChildAt(i) as RadioButton
+//                        button.isChecked = button.id == checkedId
+//                    }
+//                }
+//            }
+        }
+    }
+    private val listener1: RadioGroup.OnCheckedChangeListener = RadioGroup.OnCheckedChangeListener { group, checkedId ->
+        if (checkedId != -1) {
+            radioGroup2.setOnCheckedChangeListener(null)
+            radioGroup2.clearCheck()
+            radioGroup2.setOnCheckedChangeListener(listener2)
+        }
+    }
+
+    private val listener2: RadioGroup.OnCheckedChangeListener = RadioGroup.OnCheckedChangeListener { group, checkedId ->
+        if (checkedId != -1) {
+            radioGroup1.setOnCheckedChangeListener(null)
+            radioGroup1.clearCheck()
+            radioGroup1.setOnCheckedChangeListener(listener1)
+        }
+    }
+    private fun radioListener(){
+//        radioGroup1.setOnCheckedChangeListener { group, checkedId ->
+//            if(checkedId != -1){
+//                radioGroup2.clearCheck()
+//            }
+//        }
+//        radioGroup1.setOnCheckedChangeListener { group, checkedId ->
+//            if(checkedId != -1){
+//                radioGroup1.clearCheck()
+//            }
+//        }
+
+//        radioGroup1.setOnCheckedChangeListener(listener1)
+//        radioGroup2.setOnCheckedChangeListener(listener2)
+
+    radioGroup1.clearCheck();
+    radioGroup2.clearCheck();
+    radioGroup1.setOnCheckedChangeListener(listener1);
+    radioGroup2.setOnCheckedChangeListener(listener2);
+}
 
     private fun saveProgress(){
         with(sharedPreferences.edit()) {

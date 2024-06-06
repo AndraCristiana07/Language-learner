@@ -12,10 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
-        android:layout_marginTop="440dp"
+        android:layout_marginTop="68dp"
         android:text="Next"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+        app:layout_constraintTop_toBottomOf="@+id/table_layout" />
 
     <Button
         android:id="@+id/button_quit"
@@ -26,18 +26,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.437"
         app:layout_constraintStart_toEndOf="@+id/button_next"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/question"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/table_layout" />
+
 
     <TextView
         android:id="@+id/question"
@@ -49,162 +40,125 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="361dp"
-        android:layout_height="333dp"
-        android:layout_marginTop="36dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        app:layout_constraintVertical_bias="0.0">
 
 
-    </RadioGroup>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:gravity="center"
+            android:id="@+id/table_layout"
+            app:layout_constraintTop_toBottomOf="@+id/question"
+            >
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/image_view1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <ImageView
+                    android:id="@+id/image_view2"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+
+                    tools:srcCompat="@tools:sample/avatars" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content">
+
+                <RadioGroup
+                    android:id="@+id/radioGroup1"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                <RadioButton
+                    android:id="@+id/radio_button1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="RadioButton"
+
+                    />
+                <RadioButton
+                    android:id="@+id/radio_button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginLeft="200px"
+                    android:text="RadioButton" />
+
+                </RadioGroup>
+
+
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/image_view3"
+                    android:layout_width="100dp"
+
+                    android:layout_height="100dp"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <ImageView
+                    android:id="@+id/image_view4"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+
+                    tools:srcCompat="@tools:sample/avatars" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content">
+
+                <RadioGroup
+                    android:id="@+id/radioGroup2"
+                    android:orientation="horizontal"
+
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp">
+
+
+                <RadioButton
+                    android:id="@+id/radio_button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RadioButton" />
+
+                <RadioButton
+                    android:id="@+id/radio_button4"
+                    android:layout_width="wrap_content"
+
+                    android:layout_marginLeft="200px"
+                    android:layout_height="wrap_content"
+
+                    android:text="RadioButton" />
+
+                </RadioGroup>
+
+
+            </TableRow>
+
+        </TableLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:id="@+id/main"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context=".activities.QuizActivity">-->
-
-<!--    <Button-->
-<!--        android:id="@+id/button_next"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="68dp"-->
-<!--        android:layout_marginTop="440dp"-->
-<!--        android:text="Next"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/imageView6" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/button_quit"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="68dp"-->
-<!--        android:text="Quit"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.437"-->
-<!--        app:layout_constraintStart_toEndOf="@+id/button_next"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />-->
-
-<!--    <ImageView-->
-<!--        android:id="@+id/imageView6"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.498"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/question"-->
-<!--        tools:srcCompat="@tools:sample/avatars" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/question"-->
-<!--        android:layout_width="273dp"-->
-<!--        android:layout_height="29dp"-->
-<!--        android:layout_marginTop="52dp"-->
-<!--        android:gravity="center"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    <RadioGroup-->
-<!--        android:id="@+id/radioGroup"-->
-<!--        android:layout_width="361dp"-->
-<!--        android:layout_height="333dp"-->
-<!--        android:layout_marginTop="36dp"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/button_next"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/imageView6"-->
-<!--        app:layout_constraintVertical_bias="0.0">-->
-
-<!--        <TableLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:gravity="center">-->
-
-<!--            <TableRow-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent">-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/imageView8"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    tools:srcCompat="@tools:sample/avatars" />-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/imageView7"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="100dp"-->
-<!--                    tools:srcCompat="@tools:sample/avatars" />-->
-<!--            </TableRow>-->
-
-<!--            <TableRow-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent">-->
-
-<!--                <RadioButton-->
-<!--                    android:id="@+id/radioButton"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="RadioButton" />-->
-
-<!--                <RadioButton-->
-<!--                    android:id="@+id/radioButton2"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="100dp"-->
-<!--                    android:text="RadioButton" />-->
-
-<!--            </TableRow>-->
-
-<!--            <TableRow-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent">-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/imageView9"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    tools:srcCompat="@tools:sample/avatars" />-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/imageView10"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="100dp"-->
-<!--                    tools:srcCompat="@tools:sample/avatars" />-->
-<!--            </TableRow>-->
-
-<!--            <TableRow-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent">-->
-
-<!--                <RadioButton-->
-<!--                    android:id="@+id/radioButton3"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="RadioButton" />-->
-
-<!--                <RadioButton-->
-<!--                    android:id="@+id/radioButton4"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="100dp"-->
-<!--                    android:text="RadioButton" />-->
-<!--            </TableRow>-->
-
-<!--        </TableLayout>-->
-
-<!--    </RadioGroup>-->
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->

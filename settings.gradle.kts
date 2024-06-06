@@ -9,6 +9,8 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+
+
     }
 }
 dependencyResolutionManagement {
@@ -16,8 +18,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+
+
     }
 }
 
 rootProject.name = "Language Learner"
 include(":app")
+

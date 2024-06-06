@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
+import com.example.languagelearner.activities.EditProfile
 import com.example.languagelearner.activities.LessonsPage
 import com.example.languagelearner.activities.Login
 
@@ -62,10 +63,14 @@ class ProfileFragment : Fragment() {
         val userEmail = sharedPreferences.getString("userEmail", "")
         val userPhone = sharedPreferences.getString("userPhone", "")
 
-        name.text = "$userName"
-        email.text = "$userEmail"
-        phone.text = "$userPhone"
+        name.text = userName
+        email.text = userEmail
+        phone.text = userPhone
 
+        editButton.setOnClickListener {
+            val intent = Intent(activity, EditProfile::class.java)
+            startActivity(intent)
+        }
         logOutButton.setOnClickListener {
             val alertDialogBuilder = AlertDialog.Builder(requireContext())
             alertDialogBuilder.setMessage(" Are you sure you want to log out?")

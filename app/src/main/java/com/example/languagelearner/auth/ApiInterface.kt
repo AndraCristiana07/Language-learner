@@ -6,6 +6,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ApiInterface {
@@ -26,8 +27,11 @@ interface ApiInterface {
         fun getCategories() : Call<List<String>>
 
     @GET("/categories/{categoryName}/questions")
-    fun getQuestionsByCategory(@Path("categoryName") categoryName: String): Call<List<Question>>
+        fun getQuestionsByCategory(@Path("categoryName") categoryName: String): Call<List<Question>>
 
     @GET("/sentences")
         fun getSentences(): Call<List<Sentence>>
+
+    @PUT("/profile")
+        fun changeProfile(@Body profileUpdateRequest: ProfileUpdateRequest): Call<DefaultResponse>
 }

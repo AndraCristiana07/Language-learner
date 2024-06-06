@@ -18,8 +18,8 @@
         },
         {
             "sentenceNumber": 4,
-            "sentenceQuestion": "Can you give me that red book ?",
-            "sentenceTranslated": "Poți să îmi dai cartea aia roșie ?"
+            "sentenceQuestion": "Can you give me that red book",
+            "sentenceTranslated": "Poți să îmi dai cartea aia roșie"
         }
     ]
 }
