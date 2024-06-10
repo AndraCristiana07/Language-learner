@@ -75,30 +75,6 @@ class LessonsPage : AppCompatActivity() {
 //            insets
 //        }
 
-//        progressBar = findViewById(R.id.progressBar1)
-//        progressBar.max = 100
-//        progressBar.progress = 75
-//        Thread {
-//            while (progressBar.progress < progressBar.max) {
-//                Thread.sleep(10)
-//                progressBar.progress += 1
-//            }
-//
-//            runOnUiThread {
-//                val intent = Intent(this, MainActivity::class.java)
-//                startActivity(intent)
-//            }
-//        }.start()
-
-
-
-//        binding = ActivityLessonsPageBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-
-//        binding.button5.setOnClickListener {
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
-//        }
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigation_view)

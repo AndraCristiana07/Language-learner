@@ -1,7 +1,9 @@
 package com.example.languagelearner.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.languagelearner.R
+import com.example.languagelearner.Sentence
 import com.example.languagelearner.auth.RetrofitInstance
 import com.example.languagelearner.questions.Question
 import retrofit2.Call
@@ -27,7 +30,9 @@ class QuickQuizActivity : AppCompatActivity() {
     private lateinit var quitButton: Button
     private var score = 0
     private var currentQuestionIndex = 0
+    private var currentSentenceIndex = 0
     private lateinit var questions: List<Question>
+    private lateinit var sentences: List<Sentence>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,15 +51,31 @@ class QuickQuizActivity : AppCompatActivity() {
         quitButton = findViewById(R.id.button_quit_quiz)
 
         fetchRandomQuestions()
+        fetchRandomSentences()
+
 
         nextButton.setOnClickListener {
             checkAnswer()
-            if(currentQuestionIndex < questions.size - 1){
+            if (currentQuestionIndex < questions.size - 1) {
                 currentQuestionIndex++
-                displayQuestion(questions[currentQuestionIndex])
 
+                displayQuestion(questions[currentQuestionIndex])
+            } else if (currentQuestionIndex >= questions.size - 1 && currentSentenceIndex < sentences.size - 1) {
+                currentSentenceIndex++
+
+                displaySentence(sentences[currentSentenceIndex])
             } else {
-                Toast.makeText(this, "Quiz finished! Your final score: $score", Toast.LENGTH_LONG).show()
+                val alertDialogBuilder = AlertDialog.Builder(this)
+                alertDialogBuilder.setMessage("Quiz finished! Your final score: $score")
+                alertDialogBuilder.setPositiveButton("Go back to lessons"){_,_ ->
+//                    val intent = Intent(this, LessonsPage::class.java)
+//                    startActivity(intent)
+                    finish()
+
+                }
+                val alertDialogBox = alertDialogBuilder.create()
+                alertDialogBox.show()
+//                Toast.makeText(this, "Quiz finished! Your final score: $score", Toast.LENGTH_LONG).show()
                 nextButton.isEnabled = false
             }
         }
@@ -62,16 +83,15 @@ class QuickQuizActivity : AppCompatActivity() {
         quitButton.setOnClickListener {
             val alertDialogBuilder = AlertDialog.Builder(this)
             alertDialogBuilder.setMessage("Do you want to quit the quiz?")
-            alertDialogBuilder.setPositiveButton("Yes"){_,_ ->
+            alertDialogBuilder.setPositiveButton("Yes") { _, _ ->
                 finish()
             }
-            alertDialogBuilder.setNegativeButton("No"){_,_->
-                Toast.makeText(this,"Clicked no", Toast.LENGTH_SHORT).show()
+            alertDialogBuilder.setNegativeButton("No") { _, _ ->
+                Toast.makeText(this, "Clicked no", Toast.LENGTH_SHORT).show()
             }
             val alertDialogBox = alertDialogBuilder.create()
             alertDialogBox.show()
         }
-
     }
 
     private fun fetchRandomQuestions() {
@@ -95,23 +115,97 @@ class QuickQuizActivity : AppCompatActivity() {
         })
     }
 
-    private fun displayQuestion(question: Question){
-        quizQuestion.text = question.questionLabel
+    private fun fetchRandomSentences() {
+        RetrofitInstance.service.getRandomSentences().enqueue(object : Callback<List<Sentence>> {
+            override fun onResponse(call: Call<List<Sentence>>, response: Response<List<Sentence>>) {
+                if (response.isSuccessful) {
+                    sentences = response.body()!!
+
+                    if (sentences.isNotEmpty()) {
+//                        displaySentence(sentences[currentSentenceIndex])
+                            Log.d("Sentencess", " Loaded sentences")
+                    } else {
+                        Toast.makeText(this@QuickQuizActivity, "No sentences available", Toast.LENGTH_SHORT).show()
+                        Log.e("Sentencess", "No sentences available")
+                    }
+                } else {
+                    Toast.makeText(this@QuickQuizActivity, "Failed to load sentences", Toast.LENGTH_SHORT).show()
+                    Log.e("Sentencess", "Failed to load sentences")
+                }
+            }
+
+            override fun onFailure(call: Call<List<Sentence>>, t: Throwable) {
+                Toast.makeText(this@QuickQuizActivity, "Failed to load sentences", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
-    private fun checkAnswer(){
-        val question = questions[currentQuestionIndex]
-        val correctAnswer = question.answers.find { it.isCorrect }?.answerLabel
-        if(quizAnswer.text.toString().trim().equals(correctAnswer, ignoreCase = true)){
+    private fun displayQuestion(question: Question) {
+        quizQuestion.text = question.questionLabel
+        quizAnswer.text.clear()
+    }
+
+    private fun displaySentence(sentence: Sentence) {
+        quizQuestion.text = sentence.sentenceQuestion
+        quizAnswer.text.clear()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun checkAnswer() {
+        var correctAnswer = ""
+        if (currentQuestionIndex < questions.size - 1) {
+            val question = questions[currentQuestionIndex]
+             correctAnswer = question.answers.find { it.isCorrect }?.answerLabel ?: ""
+        } else if (currentQuestionIndex >= questions.size - 1 && currentSentenceIndex < sentences.size  ) {
+            val sentence = sentences[currentSentenceIndex]
+             correctAnswer = sentence.sentenceTranslated
+            Log.d("sentence idx: ", currentSentenceIndex.toString())
+            Log.d("correct", correctAnswer)
+        }
+        if (quizAnswer.text.toString().trim().equals(correctAnswer, ignoreCase = true)) {
             score += 10
             Toast.makeText(this, "Correct Answer!", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "Incorrect answer :(", Toast.LENGTH_SHORT).show()
+            Log.d("ans", correctAnswer)
+            Log.d("user ans", quizAnswer.text.toString().trim())
         }
+//            currentSentenceIndex++
+
+
         scoreView.text = "Score: $score"
         quizAnswer.text.clear()
     }
 
 
+    @SuppressLint("SetTextI18n")
+    private fun checkAnswer2() {
+        var correctAnswer = ""
 
+        if (currentQuestionIndex < questions.size - 1) {
+            val question = questions[currentQuestionIndex]
+
+            correctAnswer = question.answers.find { it.isCorrect }?.answerLabel ?: ""
+//            currentQuestionIndex++
+//            if (currentQuestionIndex >= questions.size) {
+//                fetchRandomSentences()
+//            }
+        } else if (currentQuestionIndex >= questions.size - 1 && currentSentenceIndex < sentences.size - 1) {
+            fetchRandomSentences()
+            val sentence = sentences[currentSentenceIndex]
+
+            correctAnswer = sentence.sentenceTranslated
+        }
+        if (quizAnswer.text.toString().trim().equals(correctAnswer, ignoreCase = true)) {
+            score += 10
+            Toast.makeText(this, "Correct Answer!", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Incorrect answer :(", Toast.LENGTH_SHORT).show()
+        }
+//            currentSentenceIndex++
+
+
+        scoreView.text = "Score: $score"
+        quizAnswer.text.clear()
+    }
 }

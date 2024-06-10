@@ -116,44 +116,5 @@ class SignUp : AppCompatActivity() {
 }
 
 
-//        val nameEditText = findViewById<EditText>(R.id.editTextText)
-//        val emailEditText = findViewById<EditText>(R.id.editTextTextEmailAddress2)
-//        val passwordEditText = findViewById<EditText>(R.id.editTextTextPassword2)
-//        val confirmPasswordEditText = findViewById<EditText>(R.id.editTextTextPassword3)
-//        val phoneEditText = findViewById<EditText>(R.id.editTextPhone)
-//        val registerButton = findViewById<Button>(R.id.register)
-
-
-
-//
-//        registerButton.setOnClickListener {
-//            val name = nameEditText.text.toString()
-//            val email = emailEditText.text.toString()
-//            val password = passwordEditText.text.toString()
-//            val confirmPassword = confirmPasswordEditText.text.toString()
-//            val phone = phoneEditText.text.toString()
-//
-//            if (password == confirmPassword) {
-//                val user = User(name = name, email = email, password = password, phone = phone)
-//                val success = databaseHelper.insertUser(user)
-//                if (success != -1L) {
-//                    Toast.makeText(this, "User registered successfully", Toast.LENGTH_LONG).show()
-//                    val intent = Intent(this, MainActivity::class.java)
-//                    startActivity(intent)
-//                } else {
-//                    Toast.makeText(this, "Registration failed", Toast.LENGTH_LONG).show()
-//                }
-//
-//            } else {
-//                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_LONG).show()
-//
-//            }
-//
-//        }
-//        binding.button7.setOnClickListener {
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
-//        }
-
 
 

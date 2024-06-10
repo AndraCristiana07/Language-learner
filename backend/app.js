@@ -234,8 +234,25 @@ app.get('/sentences', (req, res) => {
     })
 })
 
-// get sentence
 
+app.get('/sentences/random', (req, res) => {
+   sentences_db.find({ selector: { "sentenceNumber": { "$exists": true } } }, (err, resp) => {
+        const allSentences = resp.docs
+        // .map(doc => doc.sentenceNumber).flat(1)
+        const shuffledSentences = allSentences.sort(() => 0.5 - Math.random())
+        const randomSentences = shuffledSentences.slice(0, 5)
+        console.log(randomSentences)
+        res.json(randomSentences)
+        // console.log(resp.docs)
+        // res.json(resp.docs)
+
+    })
+    // sentences_db.find({ selector: { "sentenceNumber": { "$exists": true } } }, (err, resp) => {
+    //     console.log(resp.docs)
+    //     res.json(resp.docs)
+    // })
+})
+ 
 
 app.get('/categories', async (req, res) => {
     await questions_db.find({ selector: { "categoryName": { "$exists": true } }, fields: ["categoryName"] }, (err, resp) => {
@@ -293,6 +310,8 @@ app.get('/questions/random', async (req, res) => {
 
     })
 })
+
+
 
 
 app.listen(3000, () => {

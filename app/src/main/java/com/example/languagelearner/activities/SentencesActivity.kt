@@ -73,7 +73,6 @@ class SentencesActivity : AppCompatActivity() {
 
         nextButton.setOnClickListener {
 
-//            if(currentSentenceIndex < sentences.size - 1){
                 if(sentenceAnswerContainer.childCount != 0){
 
                     val sentence = sentences[currentSentenceIndex].sentenceTranslated
@@ -247,9 +246,6 @@ class SentencesActivity : AppCompatActivity() {
                     true
                 }
             }
-//            val layoutParams = textView.layoutParams as RelativeLayout.LayoutParams
-//            layoutParams.setMargins(50,50,50,50)
-//            textView.layoutParams = layoutParams
 
 
             shuffleWordsGridLayout.addView(textView)
@@ -272,26 +268,4 @@ class SentencesActivity : AppCompatActivity() {
         }
     }
 
-
-//    private fun checkSentence(){
-//        val sentence = sentences[currentSentenceIndex].sentenceTranslated
-////        val correctOrder = sentence.sentenceTranslated.split(" ").toList()
-//        Log.d("Translated correct", sentence)
-//        val userAnswer = StringBuilder()
-//        for (i in 0..<sentenceAnswerContainer.childCount){
-//            val wordView = sentenceAnswerContainer.getChildAt(i) as TextView
-//            userAnswer.append(wordView.text).append(" ")
-//
-//        }
-//        val trimmedSentence = userAnswer.toString().trim()
-//
-////        val userAnswer = sentenceAnswerContainer.children.map { (it as TextView).text.toString() }
-//        Log.d("user answer", userAnswer.toString())
-//        if(trimmedSentence == sentence){
-//            Toast.makeText(this, "Correct answer", Toast.LENGTH_SHORT).show()
-//        } else {
-//            Toast.makeText(this, "Wrong answer, try again",Toast.LENGTH_SHORT).show()
-//        }
-//
-//    }
 }

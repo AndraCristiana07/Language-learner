@@ -32,6 +32,9 @@ interface ApiInterface {
     @GET("/sentences")
         fun getSentences(): Call<List<Sentence>>
 
+    @GET("sentences/random")
+        fun getRandomSentences(): Call<List<Sentence>>
+
     @PUT("/profile")
         fun changeProfile(@Body profileUpdateRequest: ProfileUpdateRequest): Call<DefaultResponse>
 }

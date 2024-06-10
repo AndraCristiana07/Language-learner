@@ -39,7 +39,6 @@ class QuizActivity : AppCompatActivity() {
     private lateinit var imageViews: List<ImageView>
     private lateinit var radioButtons: List<RadioButton>
 
-//    private lateinit var tableLayout: TableLayout
 
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -59,11 +58,9 @@ class QuizActivity : AppCompatActivity() {
 
         binding = ActivityQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        categoryName = "Animals"
         categoryName = intent.getStringExtra("categoryName").toString()
         Log.d("categ", categoryName)
         questionTextView = findViewById(R.id.question)
-//        tableLayout = findViewById(R.id.table_layout)
         radioGroup1 = findViewById(R.id.radioGroup1)
         radioGroup2 = findViewById(R.id.radioGroup2)
         sharedPreferences = getSharedPreferences("quizProgress", Context.MODE_PRIVATE)
@@ -86,18 +83,6 @@ class QuizActivity : AppCompatActivity() {
         )
 
         radioListener()
-//        radioButtons.forEachIndexed { index, radioButton ->
-//            radioButton.setOnCheckedChangeListener { buttonView, isChecked ->
-//                if(isChecked) {
-//                    radioButtons.forEachIndexed { index2, radioButton2 ->
-//                        if(index2 != index) {
-//                            radioButton2.isChecked = false
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        }
 
         fetchQuestions(categoryName)
 
@@ -124,7 +109,6 @@ class QuizActivity : AppCompatActivity() {
                         displayQuestion(questions[currentQuestionIndex])
                     } else {
                         clearProgress()
-//                        Toast .makeText(this, "Quiz completed!", Toast.LENGTH_SHORT).show()
                         val alertDialogBuilder = AlertDialog.Builder(this)
                         alertDialogBuilder.setMessage(" $categoryName quiz completed!")
                         alertDialogBuilder.setPositiveButton("Go back to lessons"){_,_ ->
@@ -215,7 +199,8 @@ class QuizActivity : AppCompatActivity() {
 
     private fun displayQuestion(question: Question){
         questionTextView.text = question.questionLabel
-
+        radioGroup1.clearCheck()
+        radioGroup2.clearCheck()
         for ((i, answer) in question.answers.withIndex()) {
             val decodeImage = stringToBitmap(answer.image)
             if (decodeImage != null) {
@@ -225,17 +210,6 @@ class QuizActivity : AppCompatActivity() {
             }
             radioButtons[i].text = answer.answerLabel;
             radioButtons[i].tag = answer;
-//            radioGroup.addView(radioButtons[i])
-
-
-//            radioGroup.setOnCheckedChangeListener { group, checkedId ->
-//                if(checkedId != -1){
-//                    for (i in 0 until group.childCount){
-//                        val button = group.getChildAt(i) as RadioButton
-//                        button.isChecked = button.id == checkedId
-//                    }
-//                }
-//            }
         }
     }
     private val listener1: RadioGroup.OnCheckedChangeListener = RadioGroup.OnCheckedChangeListener { group, checkedId ->
@@ -254,25 +228,11 @@ class QuizActivity : AppCompatActivity() {
         }
     }
     private fun radioListener(){
-//        radioGroup1.setOnCheckedChangeListener { group, checkedId ->
-//            if(checkedId != -1){
-//                radioGroup2.clearCheck()
-//            }
-//        }
-//        radioGroup1.setOnCheckedChangeListener { group, checkedId ->
-//            if(checkedId != -1){
-//                radioGroup1.clearCheck()
-//            }
-//        }
-
-//        radioGroup1.setOnCheckedChangeListener(listener1)
-//        radioGroup2.setOnCheckedChangeListener(listener2)
-
-    radioGroup1.clearCheck();
-    radioGroup2.clearCheck();
-    radioGroup1.setOnCheckedChangeListener(listener1);
-    radioGroup2.setOnCheckedChangeListener(listener2);
-}
+        radioGroup1.clearCheck();
+        radioGroup2.clearCheck();
+        radioGroup1.setOnCheckedChangeListener(listener1);
+        radioGroup2.setOnCheckedChangeListener(listener2);
+    }
 
     private fun saveProgress(){
         with(sharedPreferences.edit()) {

@@ -119,15 +119,9 @@ class KnowledgeCardsActivity : AppCompatActivity() {
 
             "$englishWord = $correctTranslation"
         }
-
         val arrayAdapter = ArrayAdapter(this,android.R.layout.simple_list_item_1, translations)
         translationListView.adapter = arrayAdapter
-
     }
-
-
-
-
 }
 
 
