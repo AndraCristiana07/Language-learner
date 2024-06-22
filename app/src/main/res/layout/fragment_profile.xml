@@ -9,9 +9,9 @@
 
     <ImageView
         android:id="@+id/profile_image"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="150dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,13 +55,13 @@
         android:id="@+id/button_edit_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="188dp"
+        android:layout_marginTop="16dp"
         android:background="#FFFFFF"
         android:text="Edit Profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_phone" />
+        app:layout_constraintTop_toBottomOf="@+id/button_change_img" />
 
     <Button
         android:id="@+id/button_logout"
@@ -74,6 +74,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_edit_profile" />
 
+    <Button
+        android:id="@+id/button_change_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#0E0B0B"
+        android:text="Change image"
+        app:layout_constraintTop_toBottomOf="@+id/button_overview"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/button_overview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:background="#452859"
+        android:text="Overview"
+        app:layout_constraintTop_toBottomOf="@+id/profile_phone"
+        tools:layout_editor_absoluteX="0dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

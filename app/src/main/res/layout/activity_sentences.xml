@@ -48,10 +48,12 @@
                 android:id="@+id/shuffled_words_grid_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:layout_marginTop="70dp"
+                android:padding="8dp"
                 android:columnCount="3"
                 android:rowCount="2">
+
             </GridLayout>
 
             <LinearLayout

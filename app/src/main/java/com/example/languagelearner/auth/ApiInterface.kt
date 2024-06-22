@@ -1,5 +1,6 @@
 package com.example.languagelearner.auth
 
+import com.example.languagelearner.ImageUpdateRequest
 import com.example.languagelearner.Sentence
 import com.example.languagelearner.questions.Question
 import retrofit2.Call
@@ -37,4 +38,7 @@ interface ApiInterface {
 
     @PUT("/profile")
         fun changeProfile(@Body profileUpdateRequest: ProfileUpdateRequest): Call<DefaultResponse>
+
+    @PUT("/image")
+        fun changeProfileImage(@Body imageUpdateRequest: ImageUpdateRequest): Call<DefaultResponse>
 }

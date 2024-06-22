@@ -50,52 +50,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent">
 
-                    <Button
-                        android:id="@+id/sentence_button"
-                        android:layout_width="160dp"
-                        android:layout_height="wrap_content"
-                        android:background="#48171515"
-                        android:backgroundTint="#8B302B2B"
-                        android:text="Sentences"
-                        android:textColor="#000000"
-                        app:rippleColor="#130F0F" />
-
-                    <ProgressBar
-                        android:id="@+id/sentence_progressBar"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="300dp"
-                        android:layout_height="11dp" />
-                    <Button
-                        android:id="@+id/speech_button"
-                        android:layout_width="160dp"
-                        android:layout_height="wrap_content"
-                        android:background="#48171515"
-                        android:backgroundTint="#8B302B2B"
-                        android:text="Speech"
-                        android:textColor="#000000"
-                        app:rippleColor="#130F0F" />
-
-                    <ProgressBar
-                        android:id="@+id/speech_progressBar"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="300dp"
-                        android:layout_height="11dp" />
-                    <Button
-                        android:id="@+id/grammar_button"
-                        android:layout_width="160dp"
-                        android:layout_height="wrap_content"
-                        android:background="#48171515"
-                        android:backgroundTint="#8B302B2B"
-                        android:text="Grammar"
-                        android:textColor="#000000"
-                        app:rippleColor="#130F0F" />
-
-                    <ProgressBar
-                        android:id="@+id/grammar_progressBar"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="300dp"
-                        android:layout_height="11dp" />
-
                 </LinearLayout>
 
                 <View

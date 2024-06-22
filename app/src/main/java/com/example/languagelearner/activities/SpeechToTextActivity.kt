@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.LocaleList
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.widget.Button
@@ -46,8 +47,16 @@ class SpeechToTextActivity : AppCompatActivity() {
         quitButton = findViewById(R.id.button_quit_speech)
         questionText = findViewById(R.id.text_to_speech)
         answerEditText = findViewById(R.id.answer_speech)
+        answerEditText.setImeHintLocales(LocaleList(Locale("ro","RO")))
+
         sharedPreferences = getSharedPreferences("speechProgress", Context.MODE_PRIVATE)
-        currentSentenceIndex = sharedPreferences.getInt("speech-index", 0)
+
+        val redo = intent.getBooleanExtra("redo", false)
+        if(redo){
+            resetProgress()
+        } else {
+            currentSentenceIndex = sharedPreferences.getInt("speech-index", 0)
+        }
         fetchSentences()
 
         speakButton.setOnClickListener {
@@ -61,16 +70,17 @@ class SpeechToTextActivity : AppCompatActivity() {
             if(answerEditText.text.isNotEmpty()){
                 val sentence = sentences[currentSentenceIndex].sentenceTranslated
                 val userAnswer = answerEditText.text
-                val trimmedSentence = userAnswer.toString().trim()
-                if(trimmedSentence == sentence.trim()){
+                val trimmedSentence = userAnswer.toString().trim().lowercase()
+                if(trimmedSentence == sentence.trim().lowercase()){
                     Toast.makeText(this, "Correct answer", Toast.LENGTH_SHORT).show()
                     if(currentSentenceIndex < sentences.size -1){
                         currentSentenceIndex++
                         saveProgress()
                         displaySentence(sentences[currentSentenceIndex])
+                        answerEditText.text.clear()
 
                     } else {
-                        clearProgress()
+//                        clearProgress()
                         val alertDialogBuilder = AlertDialog.Builder(this)
                         alertDialogBuilder.setMessage("Lesson finished!")
                         alertDialogBuilder.setPositiveButton("Go back") { _, _ ->
@@ -80,6 +90,7 @@ class SpeechToTextActivity : AppCompatActivity() {
                         }
                         val alertDialogBox = alertDialogBuilder.create()
                         alertDialogBox.show()
+                        sharedPreferences.edit().putInt("speech-index", sentences.size).apply()
                     }
                 } else {
                     Toast.makeText(this, "Wrong answer, try again", Toast.LENGTH_SHORT).show()
@@ -92,10 +103,10 @@ class SpeechToTextActivity : AppCompatActivity() {
         }
 
         quitButton.setOnClickListener {
-            saveProgress()
             val alertDialogBuilder = AlertDialog.Builder(this)
             alertDialogBuilder.setMessage("Do you want to quit the lesson?")
             alertDialogBuilder.setPositiveButton("Yes"){_,_ ->
+                saveProgress()
                 val intent = Intent(this, LessonsPage::class.java)
                 startActivity(intent)
                 finish()
@@ -178,5 +189,12 @@ class SpeechToTextActivity : AppCompatActivity() {
         }
     }
 
+    private fun resetProgress(){
+        with(sharedPreferences.edit()){
+            putInt("speech-index",0)
+            apply()
+        }
+        currentSentenceIndex = 0
+    }
 
 }

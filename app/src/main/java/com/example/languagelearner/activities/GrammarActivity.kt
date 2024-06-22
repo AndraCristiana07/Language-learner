@@ -1,7 +1,10 @@
 package com.example.languagelearner.activities
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.LocaleList
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -17,7 +20,9 @@ import com.example.languagelearner.auth.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Locale
 import kotlin.random.Random
+
 
 class GrammarActivity : AppCompatActivity() {
     private var currentSentenceIndex = 0
@@ -27,7 +32,7 @@ class GrammarActivity : AppCompatActivity() {
     private lateinit var answerText: EditText
     private lateinit var nextButton: Button
     private lateinit var quitButton: Button
-
+    private lateinit var sharedPreferences: SharedPreferences
     private var correctAnswer: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,13 +44,22 @@ class GrammarActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        sharedPreferences = getSharedPreferences("grammarProgress", Context.MODE_PRIVATE)
+
+        val redo = intent.getBooleanExtra("redo", false)
+        if(redo){
+
+        }
+        currentSentenceIndex = sharedPreferences.getInt("grammar-index", 0)
+
         translQuestion = findViewById(R.id.transl_question)
         missingWordText = findViewById(R.id.missing_word_q)
         answerText = findViewById(R.id.answer_miss)
         nextButton = findViewById(R.id.button_next_missing)
         quitButton = findViewById(R.id.button_quit_missing)
         fetchSentences()
-
+        answerText.setImeHintLocales(LocaleList(Locale("ro","RO")))
 
         nextButton.setOnClickListener {
             if(answerText.text.isNotEmpty()){
@@ -55,6 +69,7 @@ class GrammarActivity : AppCompatActivity() {
                     Toast.makeText(this, "Correct answer", Toast.LENGTH_SHORT).show()
                     if(currentSentenceIndex < sentences.size -1){
                         currentSentenceIndex++
+                        saveProgress()
                         displaySentence(sentences[currentSentenceIndex])
 
                     } else {
@@ -67,6 +82,7 @@ class GrammarActivity : AppCompatActivity() {
                         }
                         val alertDialogBox = alertDialogBuilder.create()
                         alertDialogBox.show()
+                        sharedPreferences.edit().putInt("grammar-index", sentences.size).apply()
                     }
                 } else {
                     Toast.makeText(this, "Wrong answer, try again", Toast.LENGTH_SHORT).show()
@@ -80,6 +96,7 @@ class GrammarActivity : AppCompatActivity() {
             val alertDialogBuilder = AlertDialog.Builder(this)
             alertDialogBuilder.setMessage("Do you want to quit the lesson?")
             alertDialogBuilder.setPositiveButton("Yes"){_,_ ->
+                saveProgress()
                 val intent = Intent(this, LessonsPage::class.java)
                 startActivity(intent)
                 finish()
@@ -104,6 +121,7 @@ class GrammarActivity : AppCompatActivity() {
                         sentences = response.body()!!
                         if(sentences.isNotEmpty()){
 //                            Log.d("Senteneces: ", sentences.size.toString())
+                            sharedPreferences.edit().putInt("grammar-totalGrammar", sentences.size).apply()
                             displaySentence(sentences[currentSentenceIndex])
                         } else {
                             Toast.makeText(this@GrammarActivity, "Failed to fetch sentences", Toast.LENGTH_SHORT).show()
@@ -129,5 +147,30 @@ class GrammarActivity : AppCompatActivity() {
             }.joinToString(" ")
             missingWordText.text = missingSentence
         }
+
     }
+
+    private fun saveProgress(){
+        with(sharedPreferences.edit()){
+            putInt("grammar-index", currentSentenceIndex)
+            apply()
+        }
+    }
+
+    private fun clearProgress(){
+        with(sharedPreferences.edit()){
+            remove("grammar-index")
+            remove("grammar-totalGrammar")
+            apply()
+        }
+    }
+
+    private fun resetProgress(){
+        with(sharedPreferences.edit()){
+            putInt("grammar-index",0)
+            apply()
+        }
+        currentSentenceIndex = 0
+    }
+
 }

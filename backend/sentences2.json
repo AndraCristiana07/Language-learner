@@ -1,0 +1,71 @@
+{
+    "sentences": 
+    [
+        {
+            "sentenceNumber": 1,
+            "sentenceQuestion": "Tom is feeling sick now",
+            "sentenceTranslated": "Tom se simte rău acum"
+        },
+        {
+            "sentenceNumber": 2,
+            "sentenceQuestion": "Emma is going to school tomorrow",
+            "sentenceTranslated": "Emma va merge la școală mâine"
+        }
+        ,
+        {
+            "sentenceNumber": 3,
+            "sentenceQuestion": "The dog is outside near the house",
+            "sentenceTranslated": "Câinele este afară lângă casă"
+        },
+        {
+            "sentenceNumber": 4,
+            "sentenceQuestion": "Can you give me that red book",
+            "sentenceTranslated": "Poți să îmi dai cartea aia roșie"
+        },
+        {
+            "sentenceNumber": 5,
+            "sentenceQuestion": "I need to buy some fruits",
+            "sentenceTranslated": "Eu trebuie să cumpar fructe"
+        },
+        {
+            "sentenceNumber": 6,
+            "sentenceQuestion": "She only paints with bold colors",
+            "sentenceTranslated": "Ea pictează doar cu culori îndrăznețe"
+        },
+        {
+            "sentenceNumber": 7,
+            "sentenceQuestion": "I am going to the restaurant",
+            "sentenceTranslated": "Eu voi merge la restaurant"
+        },
+        {
+            "sentenceNumber": 8,
+            "sentenceQuestion": "Vlad just started work today",
+            "sentenceTranslated": "Vlad a început munca astăzi"
+        }, 
+        {
+            "sentenceNumber": 9,
+            "sentenceQuestion": "The man with the green umbrella just crossed the street",
+            "sentenceTranslated": "Bărbatul cu umbrela verde tocmai a traversat strada"
+        },
+        {
+            "sentenceNumber": 10,
+            "sentenceQuestion": "Do you know where the closest store is",
+            "sentenceTranslated": "Știi unde este cel mai apropiat magazin"
+        },
+        {
+            "sentenceNumber": 11,
+            "sentenceQuestion": "If you don't wake up now, you will miss your train",
+            "sentenceTranslated": "Dacă nu te trezești acum, vei pierde trenul"
+        },
+        {
+            "sentenceNumber": 12,
+            "sentenceQuestion": "I need to find the nearest gas station as fast as possible",
+            "sentenceTranslated": "Trebuie să găsesc cea mai apropiată benzinărie cât mai repede posibil"
+        },
+        {
+            "sentenceNumber": 13,
+            "sentenceQuestion": "Eliot needs to find a new toy for his cat",
+            "sentenceTranslated": "Eliot trebuie să găsesc o nouă jucărie pentru pisica lui"
+        }
+    ]
+}

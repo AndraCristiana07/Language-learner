@@ -86,6 +86,7 @@ class Login : AppCompatActivity() {
             putString("userName", user.name)
             putString("userEmail", user.email)
             putString("userPhone", user.phone)
+            putString("userImage", user.image)
             apply()
         }
     }

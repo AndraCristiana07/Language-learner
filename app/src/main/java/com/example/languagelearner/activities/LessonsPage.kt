@@ -3,9 +3,13 @@ package com.example.languagelearner.activities
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.ProgressBar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -21,10 +25,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 class LessonsPage : AppCompatActivity() {
-    // TODO : TEXT TO SPEECH
-    // TODO : RESOLVE SENTENCE BUTTON
-    // TODO : USER NAME IN LESSON PAGE - to work for dif users
-    // TODO : IMG IN BACKEND
 
     private lateinit var binding: ActivityLessonsPageBinding
     private lateinit var progressBar: ProgressBar
@@ -38,6 +38,10 @@ class LessonsPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+// Remember that you should never show the action bar if the
+// status bar is hidden, so hide that too if necessary.
+        actionBar?.hide()
         binding = ActivityLessonsPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
         sharedPreferences = this.getSharedPreferences("nameForUser", Context.MODE_PRIVATE)
@@ -48,8 +52,17 @@ class LessonsPage : AppCompatActivity() {
         val userName = intent.getStringExtra("USER_NAME") ?: "User"
         Log.d("LessonsPageActivity", "Received userName: $userName")
         binding.username.text = "Hi, $userName!"
-        binding.username.text = "Hi, $userName"
+//        binding.username.text = "Hi, $userName"
+        val userImage = sharedPreferences.getString("userImage", "")
+        val bitmapImage = userImage?.let { stringToBitmap(it) }
+        if (bitmapImage != null){
+            binding.profileImageView.setImageBitmap(bitmapImage)
+        } else {
+            binding.profileImageView.setImageResource(R.drawable.profile)
+        }
+
         loadFragment(HomeFragment())
+
         bottomNav = findViewById(R.id.bottomNavigationView) as BottomNavigationView
         bottomNav.setOnItemSelectedListener {
             when(it.itemId) {
@@ -105,6 +118,16 @@ class LessonsPage : AppCompatActivity() {
 //            replace(R.id.flFragment,fragment)
 //            commit()
 //        }
+    }
+
+    private fun stringToBitmap(encodedString: String): Bitmap? {
+        return try {
+            val imageBytes = Base64.decode(encodedString, Base64.DEFAULT)
+            BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+        } catch (e: IllegalArgumentException) {
+            Log.e("decode error", "Invalid base64 str")
+            null
+        }
     }
 
 

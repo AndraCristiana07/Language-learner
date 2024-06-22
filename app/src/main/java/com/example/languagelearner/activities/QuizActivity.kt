@@ -38,11 +38,7 @@ class QuizActivity : AppCompatActivity() {
     private lateinit var radioGroup2: RadioGroup
     private lateinit var imageViews: List<ImageView>
     private lateinit var radioButtons: List<RadioButton>
-
-
     private lateinit var sharedPreferences: SharedPreferences
-
-    //    private var categoryName = "Animals"
     private var categoryName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,16 +51,24 @@ class QuizActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        sharedPreferences = getSharedPreferences("quizProgress", Context.MODE_PRIVATE)
+
+        categoryName = intent.getStringExtra("categoryName").toString()
+
+        val redo = intent.getBooleanExtra("redo", false)
 
         binding = ActivityQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        categoryName = intent.getStringExtra("categoryName").toString()
+        if(redo) {
+            resetProgress()
+        } else {
+            currentQuestionIndex = sharedPreferences.getInt("$categoryName-index",0)
+
+        }
         Log.d("categ", categoryName)
         questionTextView = findViewById(R.id.question)
         radioGroup1 = findViewById(R.id.radioGroup1)
         radioGroup2 = findViewById(R.id.radioGroup2)
-        sharedPreferences = getSharedPreferences("quizProgress", Context.MODE_PRIVATE)
-        currentQuestionIndex = sharedPreferences.getInt("$categoryName-index",0)
 
 
 
@@ -108,7 +112,8 @@ class QuizActivity : AppCompatActivity() {
                         saveProgress()
                         displayQuestion(questions[currentQuestionIndex])
                     } else {
-                        clearProgress()
+//                        clearProgress()
+//                        saveProgressCompleted()
                         val alertDialogBuilder = AlertDialog.Builder(this)
                         alertDialogBuilder.setMessage(" $categoryName quiz completed!")
                         alertDialogBuilder.setPositiveButton("Go back to lessons"){_,_ ->
@@ -119,6 +124,8 @@ class QuizActivity : AppCompatActivity() {
                         }
                         val alertDialogBox = alertDialogBuilder.create()
                         alertDialogBox.show()
+
+                        sharedPreferences.edit().putInt("$categoryName-index", questions.size).apply()
 
                     }
                 } else {
@@ -134,10 +141,11 @@ class QuizActivity : AppCompatActivity() {
 
 
         binding.buttonQuit.setOnClickListener {
-            saveProgress()
+//            saveProgress()
             val alertDialogBuilder = AlertDialog.Builder(this)
             alertDialogBuilder.setMessage("Do you want to quit the lesson?")
             alertDialogBuilder.setPositiveButton("Yes"){_,_ ->
+                saveProgress()
                 val intent = Intent(this, LessonsPage::class.java)
                 startActivity(intent)
                 finish()
@@ -247,6 +255,21 @@ class QuizActivity : AppCompatActivity() {
             remove("$categoryName-totalQuestions")
             apply()
         }
+    }
+
+    private fun saveProgressCompleted() {
+        with(sharedPreferences.edit()) {
+            putInt("$categoryName-index", questions.size)
+            apply()
+        }
+    }
+
+    private fun resetProgress(){
+        with(sharedPreferences.edit()){
+            putInt("$categoryName-index",0)
+            apply()
+        }
+        currentQuestionIndex = 0
     }
 
 }
